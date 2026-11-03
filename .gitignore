@@ -218,3 +218,18 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Flet / Flutter / mobile build artifacts
+.flet/
+flet_app/build/
+build/apk/
+build/flutter/
+*.apk
+*.aab
+*.ipa
+
+# Course runtime / generated bundles
+data/
+flet_app/bundled_course/
+flet_app/assets/course/
+flet_app/course_nav/

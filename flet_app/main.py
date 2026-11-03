@@ -9,12 +9,15 @@ import flet as ft
 
 FLET_APP_DIR = Path(__file__).resolve().parent
 REPO_ROOT = FLET_APP_DIR.parent
-if str(FLET_APP_DIR) not in sys.path:
-    sys.path.insert(0, str(FLET_APP_DIR))
-if (REPO_ROOT / "course_nav" / "quiz_parser.py").is_file():
-    sys.path.insert(0, str(REPO_ROOT))
-elif str(REPO_ROOT) not in sys.path:
-    sys.path.insert(0, str(REPO_ROOT))
+for nav_root in (FLET_APP_DIR, REPO_ROOT):
+    if (nav_root / "course_nav" / "quiz_parser.py").is_file():
+        nav_path = str(nav_root)
+        if nav_path not in sys.path:
+            sys.path.insert(0, nav_path)
+        break
+else:
+    if str(FLET_APP_DIR) not in sys.path:
+        sys.path.insert(0, str(FLET_APP_DIR))
 
 from course_nav.course_loader import ContentItem, discover_modules, read_markdown
 from course_nav.quiz_parser import parse_quiz_markdown
@@ -341,7 +344,7 @@ class CourseNavigator:
             [
                 ft.Text("Python Simulation Libraries Course", size=22, weight=ft.FontWeight.BOLD),
                 ft.Text(
-                    "LLM calls · structured output · backend patterns · offline theory & quizzes",
+                    "SimPy DES · Mesa ABM · system dynamics · offline theory & quizzes",
                     color=ft.Colors.ON_SURFACE_VARIANT,
                 ),
                 ft.Row(
@@ -368,6 +371,36 @@ class CourseNavigator:
                     ],
                 )
             )
+
+        if not modules:
+            self.body.controls.append(
+                ft.Container(
+                    padding=16,
+                    bgcolor=ft.Colors.ERROR_CONTAINER,
+                    border_radius=8,
+                    content=ft.Column(
+                        spacing=8,
+                        controls=[
+                            ft.Text(
+                                "No course modules found",
+                                weight=ft.FontWeight.BOLD,
+                                color=ft.Colors.ON_ERROR_CONTAINER,
+                            ),
+                            ft.Text(
+                                "Rebuild after running: python flet_app/prepare_assets.py",
+                                size=12,
+                                color=ft.Colors.ON_ERROR_CONTAINER,
+                            ),
+                            ft.Text(
+                                f"Looked under: {course_root}",
+                                size=11,
+                                color=ft.Colors.ON_ERROR_CONTAINER,
+                            ),
+                        ],
+                    ),
+                )
+            )
+            return
 
         self.body.controls.append(
             ft.Text("Your learning path", size=18, weight=ft.FontWeight.W_600)
@@ -589,8 +622,29 @@ class CourseNavigator:
 
 
 def main(page: ft.Page) -> None:
-    CourseNavigator(page).start()
+    try:
+        CourseNavigator(page).start()
+    except Exception as exc:  # noqa: BLE001 — show startup failures on device
+        page.add(
+            ft.SafeArea(
+                content=ft.Container(
+                    padding=16,
+                    content=ft.Column(
+                        controls=[
+                            ft.Text("Course navigator failed to start", size=18, weight=ft.FontWeight.BOLD),
+                            ft.Text(str(exc), selectable=True),
+                            ft.Text(
+                                "If this is an APK build, run prepare_assets.py before flet build apk.",
+                                size=12,
+                                color=ft.Colors.ON_SURFACE_VARIANT,
+                            ),
+                        ]
+                    ),
+                )
+            )
+        )
+        page.update()
 
 
 if __name__ == "__main__":
-    ft.run(main)
+    ft.run(main, assets_dir="assets")

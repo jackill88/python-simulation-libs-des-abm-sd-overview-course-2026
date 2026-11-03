@@ -71,9 +71,12 @@ streamlit run app/main.py
 
 ```bash
 pip install -r requirements-flet.txt
+python flet_app/prepare_assets.py   # copies markdown to flet_app/bundled_course + course_nav
 flet run flet_app/main.py
 
-# Build offline APK (optional)
+# Build offline APK (run prepare_assets immediately before build)
 python flet_app/prepare_assets.py
 flet build apk
 ```
+
+The APK reads course files from `flet_app/bundled_course/` (plain app files). Markdown under `assets/` alone is not reliably readable on Android via Python `Path.read_text`.

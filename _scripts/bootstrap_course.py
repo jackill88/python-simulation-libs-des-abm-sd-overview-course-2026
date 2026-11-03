@@ -89,7 +89,7 @@ streamlit run app/main.py
 pip install -r requirements-flet.txt
 flet run flet_app/main.py
 
-# Build offline APK (optional)
+# Build offline APK (required: copy markdown + course_nav into flet_app first)
 python flet_app/prepare_assets.py
 flet build apk
 ```
