@@ -5,7 +5,7 @@ description = "Offline Android course navigator for Python simulation libraries 
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
-    "flet>=0.24.0",
+    "flet>=0.86.5",
 ]
 
 [tool.flet]
@@ -23,3 +23,8 @@ min_sdk_version = 24
 
 [tool.flet.android.permission]
 "android.permission.INTERNET" = false
+
+# Flet 0.86.5 pins jni 1.0.0. Current Android plugins require jni 1.1.x.
+# Without this override the release APK installs and then stays on a blank screen.
+[tool.flet.flutter.pubspec.dependency_overrides]
+jni = "1.1.0"
