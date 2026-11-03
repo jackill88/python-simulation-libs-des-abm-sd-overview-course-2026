@@ -1,0 +1,25 @@
+[project]
+name = "python-simulation-libs-course"
+version = "1.0.0"
+description = "Offline Android course navigator for Python simulation libraries (DES, ABM, SD)"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "flet>=0.24.0",
+]
+
+[tool.flet]
+org = "com.northline.simulation"
+product = "Simulation Libraries Course"
+bundle_id = "com.northline.simulation.course"
+build_number = 1
+
+[tool.flet.app]
+path = "flet_app"
+module = "main"
+
+[tool.flet.android]
+min_sdk_version = 24
+
+[tool.flet.android.permission]
+"android.permission.INTERNET" = false
