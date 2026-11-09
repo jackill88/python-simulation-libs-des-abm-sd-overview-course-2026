@@ -2,7 +2,7 @@
 Lab: Call Centre System Dynamics
 Module 05: System Dynamics
 
-Theory: theory/02_stocks_flows_and_euler.md
+Theory: theory/02_stocks_flows_notation.md, theory/04_euler_and_time_step.md
 
 Integrate backlog and staffing stocks with Euler steps.
 

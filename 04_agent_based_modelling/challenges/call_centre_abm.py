@@ -2,7 +2,7 @@
 Project: Call Centre ABM with Mesa
 Module 04: Agent-Based Modelling
 
-Theory: theory/02_mesa_agents_and_steps.md
+Theory: theory/03_mesa_structure.md, theory/05_patience_abandonment_calibration.md
 
 Model callers and agents as individuals with patience and service rules.
 
