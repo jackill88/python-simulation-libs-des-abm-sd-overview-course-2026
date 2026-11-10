@@ -2,7 +2,7 @@
 Project: Call Centre DES with SimPy
 Module 03: Discrete-Event Simulation
 
-Theory: theory/02_simpy_processes.md
+Theory: theory/03_simpy_processes.md, theory/05_statistics_warmup_run_length.md
 
 Build an M/M/c-style model of Northline Support using SimPy.
 
